@@ -1,0 +1,22 @@
+name: Deploy to Ubuntu
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.AWS_SSH_PRIVATE_KEY }}
+
+      - name: Deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@your-aws-ip << 'EOF'
+            cd /var/www/your-app
+            git pull origin main
+            sudo systemctl restart your-service
+          EOF
