@@ -11,3 +11,6 @@ jobs:
         
       - name: Print success message
         run: echo "✅ Your first workflow works!"
+
+        - name: List all files
+          run: ls -la
