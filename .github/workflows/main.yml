@@ -1,13 +1,21 @@
-name: My First Workflow
+name: Deploy to AWS
 
-on: [push]  # Runs on every code push
+on:
+  push:
+    branches: [ main ]
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-  - uses: actions/checkout@v4
-  - name: List project files  # 👈 New step
-    run: ls -la
-  - name: Count Python files  # 👈 Another step
-    run: find . -name "*.py" | wc -l
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH Key
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@your-aws-instance-ip "cd /var/www/myapp && git pull && sudo systemctl restart myapp"
