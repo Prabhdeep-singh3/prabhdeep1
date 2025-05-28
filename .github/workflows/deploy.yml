@@ -15,7 +15,7 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -o StrictHostKeyChecking=no ubuntu@your-aws-ip << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@18.220.155.83 << 'EOF'
             cd /var/www/your-app
             git pull origin main
             sudo systemctl restart your-service
