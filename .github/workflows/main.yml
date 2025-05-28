@@ -1,0 +1,13 @@
+name: My First Workflow
+
+on: [push]  # Runs on every code push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Print success message
+        run: echo "✅ Your first workflow works!"
